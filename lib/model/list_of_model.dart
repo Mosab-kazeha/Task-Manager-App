@@ -1,7 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:task_manager_app/model/model.dart';
+import 'package:task_manager_app/model/tasks/tasks_model.dart';
 
-class ListOfModel extends Model {
-  List<Model> listOf;
-  ListOfModel({required this.listOf});
+class ListOf<T extends TodoModel> extends TodoModel {
+  List<T> model;
+  ListOf({required this.model});
 }

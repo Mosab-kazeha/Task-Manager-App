@@ -6,26 +6,6 @@ import 'package:task_manager_app/model/tasks/tasks_model.dart';
 import 'package:task_manager_app/service/service.dart';
 
 class TodoService extends Serivec {
-  Future<Model> getTodo() async {
-    try {
-      response = await api.dio.get(baseUrl + todoUrl);
-      if (response.statusCode == 200) {
-        List<TodoModel> temp = List.generate(
-          response.data.length,
-          (index) => TodoModel.fromMap(response.data["todos"][index]),
-        );
-        ListOfModel result = ListOfModel(listOf: temp);
-        return result;
-      } else {
-        ErrorModel error = ErrorModel(error: response.statusMessage!);
-        return error;
-      }
-    } catch (e) {
-      ExceptionMode exception = ExceptionMode(exception: e.toString());
-      return exception;
-    }
-  }
-
   Future<Model> createTodo({required TodoModel todo}) async {
     try {
       response =
@@ -38,7 +18,7 @@ class TodoService extends Serivec {
         return error;
       }
     } catch (e) {
-      ExceptionMode exception = ExceptionMode(exception: e.toString());
+      ExceptionModel exception = ExceptionModel(exception: e.toString());
       return exception;
     }
   }
@@ -56,7 +36,7 @@ class TodoService extends Serivec {
         return error;
       }
     } catch (e) {
-      ExceptionMode exception = ExceptionMode(exception: e.toString());
+      ExceptionModel exception = ExceptionModel(exception: e.toString());
       return exception;
     }
   }
@@ -72,28 +52,48 @@ class TodoService extends Serivec {
         return error;
       }
     } catch (e) {
-      ExceptionMode exception = ExceptionMode(exception: e.toString());
+      ExceptionModel exception = ExceptionModel(exception: e.toString());
       return exception;
     }
   }
 
-  Future<Model> getPaginationTodo(
-      {required String limit, required String skip}) async {
+  Future<Model> getPaginationTodo({required String skip}) async {
     try {
-      response = await api.dio.get("$baseUrl$todoUrl?limit=$limit&skip=$skip");
+      response = await api.dio.get("$baseUrl$todoUrl?limit=10&skip=$skip");
       if (response.statusCode == 200) {
+        print(response.data.length);
         List<TodoModel> temp = List.generate(
-          response.data.length,
+          response.data["todos"].length,
           (index) => TodoModel.fromMap(response.data["todos"][index]),
         );
-        ListOfModel result = ListOfModel(listOf: temp);
+        ListOf<TodoModel> result = ListOf(model: temp);
         return result;
       } else {
         ErrorModel error = ErrorModel(error: response.statusMessage!);
         return error;
       }
     } catch (e) {
-      ExceptionMode exception = ExceptionMode(exception: e.toString());
+      ExceptionModel exception = ExceptionModel(exception: e.toString());
+      return exception;
+    }
+  }
+
+  Future<Model> getTodo() async {
+    try {
+      response = await api.dio.get(baseUrl + todoUrl);
+      if (response.statusCode == 200) {
+        List<TodoModel> temp = List.generate(
+          response.data["todos"].length,
+          (index) => TodoModel.fromMap(response.data["todos"][index]),
+        );
+        ListOf<TodoModel> result = ListOf(model: temp);
+        return result;
+      } else {
+        ErrorModel error = ErrorModel(error: response.statusMessage!);
+        return error;
+      }
+    } catch (e) {
+      ExceptionModel exception = ExceptionModel(exception: e.toString());
       return exception;
     }
   }

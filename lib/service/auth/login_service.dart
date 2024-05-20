@@ -9,9 +9,9 @@ import 'package:task_manager_app/service/service.dart';
 class LoginService extends Serivec {
   Future<Model> login({required LoginRequestModel user}) async {
     try {
-      response = await api.dio.get(baseUrl + loginUrl, data: user.toJson());
+      response = await api.dio.post(baseUrl + loginUrl, data: user.toJson());
       if (response.statusCode == 200) {
-        LoginResponseModel user = LoginResponseModel.fromJson(response.data);
+        LoginResponseModel user = LoginResponseModel.fromMap(response.data);
         writeSecureData('token', user.token);
         //? here we save the token in FlutterSecureStorage
         ///// //todo: save the user.token in flutter_secure_storage
@@ -21,7 +21,7 @@ class LoginService extends Serivec {
         return error;
       }
     } catch (e) {
-      ExceptionMode exception = ExceptionMode(exception: e.toString());
+      ExceptionModel exception = ExceptionModel(exception: e.toString());
       return exception;
     }
   }

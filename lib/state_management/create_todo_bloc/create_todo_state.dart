@@ -14,9 +14,9 @@ class ErrorInCreateTodo extends CreateTodoState {
   ErrorInCreateTodo({required this.error});
 }
 
-class OffLineState extends CreateTodoState {
+class OffLineCreateState extends CreateTodoState {
   TodoModel todo;
-  OffLineState({
+  OffLineCreateState({
     required this.todo,
   });
 }

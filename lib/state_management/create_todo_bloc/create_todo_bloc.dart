@@ -13,13 +13,12 @@ class CreateTodoBloc extends Bloc<CreateTodoEvent, CreateTodoState> {
     on<CreateNewTodo>((event, emit) async {
       emit(LoadingState());
       Model result = await TodoService().createTodo(todo: event.theNewTodo);
-
       if (result is TodoModel) {
         emit(CreateTodoSuccessfully());
       } else if (result is ErrorModel) {
         emit(ErrorInCreateTodo(error: result));
       } else {
-        emit(OffLineState(todo: event.theNewTodo));
+        emit(OffLineCreateState(todo: event.theNewTodo));
       }
     });
   }

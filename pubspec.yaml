@@ -41,7 +41,8 @@ dependencies:
   flutter_secure_storage: ^9.2.1
   connectivity_plus: ^6.0.3
   flutter_slidable: ^3.1.0
-  hydrated_bloc: ^9.1.5
+  
+ 
   
 
 dev_dependencies:
@@ -54,6 +55,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  mockito: ^5.4.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

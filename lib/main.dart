@@ -6,15 +6,11 @@ import 'package:task_manager_app/screen/login_screen.dart';
 import 'package:task_manager_app/screen/todo_screen.dart';
 import 'package:task_manager_app/state_management/cheaking_token_bloc/cheaking_token_bloc.dart';
 
-Future<void> main() async {
+void main() {
+  Bloc.observer = MyBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   setup(); //? we init the FlutterSecureStorage
-  Bloc.observer = MyBlocObserver();
-  // HydratedBloc.storage = await HydratedStorage.build(
-  //   storageDirectory: kIsWeb
-  //       ? HydratedStorage.webStorageDirectory
-  //       : await getApplicationDocumentsDirectory(),
-  // );
+
   runApp(const MyApp());
 }
 

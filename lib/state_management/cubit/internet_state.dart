@@ -1,4 +1,4 @@
-part of 'internet_bloc.dart';
+part of 'internet_cubit.dart';
 
 @immutable
 abstract class InternetState {}
@@ -16,3 +16,7 @@ class NotConnectedState extends InternetState {
 
   NotConnectedState({required this.message});
 }
+
+enum ConnectivityStatus { connected, disconnected }
+
+

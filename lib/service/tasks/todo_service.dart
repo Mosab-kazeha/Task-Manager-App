@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:task_manager_app/model/error_model.dart';
 import 'package:task_manager_app/model/exception_model.dart';
 import 'package:task_manager_app/model/list_of_model.dart';
@@ -8,10 +9,11 @@ import 'package:task_manager_app/service/service.dart';
 class TodoService extends Serivec {
   Future<Model> createTodo({required TodoModel todo}) async {
     try {
-      response =
-          await api.dio.post(baseUrl + createTodoUrl, data: todo.toJson());
+      response = await api.dio
+          .post(baseUrl + todoUrl + createTodoUrl, data: todo.toJson());
+
       if (response.statusCode == 200) {
-        TodoModel todo = TodoModel.fromJson(response.data);
+        TodoModel todo = TodoModel.fromMap(response.data);
         return todo;
       } else {
         ErrorModel error = ErrorModel(error: response.statusMessage!);
@@ -24,12 +26,14 @@ class TodoService extends Serivec {
   }
 
   Future<Model> editTodo({required TodoModel todo, required int todoId}) async {
-    //! remember you can edit if task from true to false or the title of task
+//final body = FormData.fromMap(todo.toMap());
     try {
-      response =
-          await api.dio.put("$baseUrl$todoUrl/$todoId", data: todo.toJson());
+      response = await api.dio.put("$baseUrl$todoUrl/$todoId",
+          data: todo.toJson(),
+          options: Options(headers: {"Content-Type": "x-www-form-urlencoded"}));
+
       if (response.statusCode == 200) {
-        TodoModel todo = TodoModel.fromJson(response.data);
+        TodoModel todo = TodoModel.fromMap(response.data);
         return todo;
       } else {
         ErrorModel error = ErrorModel(error: response.statusMessage!);
@@ -45,7 +49,7 @@ class TodoService extends Serivec {
     try {
       response = await api.dio.delete("$baseUrl$todoUrl/$todoId");
       if (response.statusCode == 200) {
-        TodoModel todo = TodoModel.fromJson(response.data);
+        TodoModel todo = TodoModel.fromMap(response.data);
         return todo;
       } else {
         ErrorModel error = ErrorModel(error: response.statusMessage!);
